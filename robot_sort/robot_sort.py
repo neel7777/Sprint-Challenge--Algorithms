@@ -97,7 +97,35 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        self.set_light_on()
+        #use the light as a tracker for when items are swapped - turn off while moving, turn on when swapping and starts the loop again
+        while self.light_is_on():
+            self.set_light_off()
+            #traverse the list, compare held item to current item
+            while self.can_move_right():
+                self.swap_item()
+                self.move_right()
+                #in the case where held item is greater, we deposit the item to that index, take that smaller item, deposit it to the left
+                #this is a manual physical way to implement bubble sort swapping - moving larger item to the right
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+                if self.compare_item() == 0 or self.compare_item() == -1:
+                    self.move_left()
+            while self.can_move_left():
+                self.move_left()
+
+        return self._list
+
+        
+
+
+
+
+        
 
 
 if __name__ == "__main__":
@@ -110,3 +138,4 @@ if __name__ == "__main__":
 
     robot.sort()
     print(robot._list)
+
